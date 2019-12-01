@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    >
+
+    <ImageView
+        android:id="@+id/directory_logo"
+        android:src="@drawable/folder"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_gravity="left"
+        />
+
+    <ImageView
+        android:id="@+id/plus_button"
+        android:onClick="add"
+        android:src="@drawable/plus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center" />
+
+
+    <ImageView
+        android:id="@+id/settings_logo"
+        android:src="@drawable/run"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_gravity="right" />
+
+</android.support.v7.widget.Toolbar>
+
