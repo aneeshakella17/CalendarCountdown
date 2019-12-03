@@ -6,22 +6,11 @@
     tools:context="com.example.calendarcountdown.HomeScreenFragment">
 
     <ListView
-        android:id="@+id/coming"
+        android:id="@+id/list_of_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.50">
     </ListView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-
-    <ListView
-        android:id="@+id/happened"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.50">
-    </ListView>
 
 </LinearLayout>

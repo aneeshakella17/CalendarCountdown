@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +30,7 @@ public class HomeScreenFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,8 +74,7 @@ public class HomeScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
-        ListView coming = v.findViewById(R.id.coming);
-        ListView happened = v.findViewById(R.id.happened);
+        ListView lv = v.findViewById(R.id.list_of_events);
 
         EventDbHelper eventDbHelper = new EventDbHelper(getActivity());
         SQLiteDatabase sqLiteDatabase = eventDbHelper.getWritableDatabase();
@@ -86,64 +85,32 @@ public class HomeScreenFragment extends Fragment {
 
 
 
-        ArrayList<String> happened_list = new ArrayList<String>();
-        ArrayList<String> coming_list = new ArrayList<String>();
+        ArrayList<String> total_list = new ArrayList<String>();
 
         Cursor cursor = eventDbHelper.readEvent(sqLiteDatabase);
         while (cursor.moveToNext()){
             String name = cursor.getString(0);
-            String date = cursor.getString(1);
-            try {
-                Date today = new SimpleDateFormat("MM/dd/yyyy").parse(currentDate);
-                Date parsedDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
-                if(parsedDate.before(today)){
-                    happened_list.add(name);
-                } else {
-                    coming_list.add(name);
-                }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            total_list.add(name);
         }
 
-        System.out.println(coming_list.size());
-        System.out.println(happened_list.size());
 
-        ArrayAdapter<String> comingAdapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, coming_list);
+        ArrayAdapter<String> totalAdapter =
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, total_list);
 
-        coming.setAdapter(comingAdapter);
+        lv.setAdapter(totalAdapter);
 
-        ArrayAdapter<String> happenedAdapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, happened_list);
 
-        happened.setAdapter(happenedAdapter);
-
-        coming.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = (String) adapterView.getItemAtPosition(0);
+                ArrayList<String> info = HomeScreen.getInfo(name);
                 DisplayScreenFragment dsf = new DisplayScreenFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("Event Name", name);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.home, dsf, "AddnamePane");
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-
-
-        happened.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = (String) adapterView.getItemAtPosition(0);
-                DisplayScreenFragment dsf = new DisplayScreenFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("Event Name", name);
+                bundle.putString("Date", info.get(0));
+                bundle.putString("Time", info.get(1));
+                dsf.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.home, dsf, "AddnamePane");
@@ -161,8 +128,6 @@ public class HomeScreenFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-
 
     @Override
     public void onDetach() {

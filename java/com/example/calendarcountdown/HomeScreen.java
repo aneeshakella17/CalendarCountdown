@@ -1,6 +1,8 @@
 package com.example.calendarcountdown;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,7 @@ public class HomeScreen extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static HashMap<String, ArrayList<String>> map = new HashMap<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -52,12 +59,43 @@ public class HomeScreen extends Fragment {
         return fragment;
     }
 
+    public static ArrayList<String> getInfo(String eventName){
+        return map.get(eventName);
+    }
+
+    public static void putInfo(String eventName, ArrayList toPut){
+         map.put(eventName, toPut);
+    }
+
+    public static boolean hasName(String eventName){
+        return map.containsKey(eventName);
+    }
+
+    public static void removeName(String eventName){
+         map.remove(eventName);
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+        EventDbHelper eventDbHelper = new EventDbHelper(getActivity());
+        SQLiteDatabase sqLiteDatabase = eventDbHelper.getWritableDatabase();
+
+        Cursor cursor = eventDbHelper.readEvent(sqLiteDatabase);
+        while (cursor.moveToNext()){
+            String name = cursor.getString(0);
+            String date = cursor.getString(1);
+            String time = cursor.getString(2);
+            ArrayList<String> toAdd = new ArrayList<>();
+            toAdd.add(date);
+            toAdd.add(time);
+            map.put(name, toAdd);
         }
 
         HomeScreenFragment home = new HomeScreenFragment();

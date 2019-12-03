@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,6 +98,10 @@ public class EditScreenFragment extends Fragment {
             public void onClick(View v){
                 EditText eventNameText = getView().findViewById(R.id.event_name);
                 String eventName = eventNameText.getText().toString();
+                if(HomeScreen.hasName(eventName)){
+                    Toast.makeText(getActivity(), "Name already taken. Please choose a different name.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Event e = new Event(eventName, getView().findViewById(R.id.date).toString(), getView().findViewById(R.id.time).toString());
                 TextView myDate = getView().findViewById(R.id.date);
                 TextView myTime = getView().findViewById(R.id.time);
@@ -103,6 +109,12 @@ public class EditScreenFragment extends Fragment {
                 EventDbHelper eventDbHelper = new EventDbHelper(getActivity());
                 SQLiteDatabase sqLiteDatabase = eventDbHelper.getWritableDatabase();
                 eventDbHelper.addEvent(eventName, myDate.getText().toString(), myTime.getText().toString(), sqLiteDatabase);
+                ArrayList<String> toPut = new ArrayList<>();
+                toPut.add(myDate.getText().toString());
+                toPut.add(myTime.getText().toString());
+
+                HomeScreen.putInfo(eventName, toPut);
+
                 Toast.makeText(getActivity(), "Event:" + " " + eventName + " " + "Saved Successfully!", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager().popBackStack();
             }

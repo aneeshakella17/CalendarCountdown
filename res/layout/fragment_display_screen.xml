@@ -46,6 +46,7 @@
             android:orientation="horizontal">
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_years"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -60,6 +61,7 @@
                 android:textSize="32dp" />
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_months"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -83,6 +85,7 @@
             android:orientation="horizontal">
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -107,6 +110,7 @@
             android:orientation="horizontal">
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -117,10 +121,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" Minutes "
+                android:text=" Hours "
                 android:textSize="32dp" />
 
+
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_mins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -131,7 +137,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" Seconds "
+                android:text=" Mins "
+                android:textSize="32dp" />
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/num_of_secs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="X"
+                android:textSize="32dp" />
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" Secs "
                 android:textSize="32dp" />
 
         </LinearLayout>
