@@ -11,10 +11,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +36,7 @@ public class HomeScreen extends Fragment {
     private String mParam1;
     private String mParam2;
     private static HashMap<String, ArrayList<String>> map = new HashMap<>();
-
+    public static HashSet<String> directory_sets = new HashSet<>();
     private OnFragmentInteractionListener mListener;
 
     public HomeScreen() {
@@ -75,6 +77,17 @@ public class HomeScreen extends Fragment {
          map.remove(eventName);
     }
 
+    public static boolean addDirectoryName(String directory_name){
+        if(!directory_sets.contains(directory_name)) {
+            directory_sets.add(directory_name);
+            return true;
+        }
+        return false;
+    }
+
+    public static HashSet<String> getDirectoryNames(){
+        return directory_sets;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

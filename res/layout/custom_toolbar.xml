@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/directory_logo"
+        android:onClick="showDirectories"
         android:src="@drawable/folder"
         android:layout_width="48dp"
         android:layout_height="48dp"

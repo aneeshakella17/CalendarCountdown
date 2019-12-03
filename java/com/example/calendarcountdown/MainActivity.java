@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -33,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.main_screen, homeScreen, "AddnamePane");
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
+
         }
+
         setContentView(R.layout.activity_main);
 
 
@@ -48,7 +52,21 @@ public class MainActivity extends AppCompatActivity {
         title.setGravity(Gravity.CENTER);
         title.setTextColor(Color.BLACK);
         builder.setPositiveButton("Cancel", null);
-        builder.setNegativeButton("Add Directory", null);
+        builder.setNegativeButton("Add Directory", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                builder.setView(inflater.inflate(R.layout.fragment_add_directory,null));
+                builder.show();
+            }
+        });
+
+
+
+
+
+
 
         builder.setNeutralButton("Add Event", new DialogInterface.OnClickListener() {
             @Override
@@ -87,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 
 
     public void showEditScreen(int year, int month, int day, int hour, int minute) {
